@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    height: 100px;
+}
+.wraper {
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+.headr__content {
+    padding: 20px;
+    font-size: 40px;
+    text-align: center;
+}
+
+/* //-----------------TapGallery------------- */
+
+.gallery {
+    background-color: thistle;
+    width: 100%;
+    height: 500px;
+    /* padding: 10px;
+    margin: 0; */
+    display: flex;
+    align-items: center;
+}
+.gallery__body {
+    background-color: rgb(243, 242, 242);
+    /* max-width: 500px;
+    height: 100%; */
+    margin: 0 auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+/* .gallery__content {
+    background-color: rgb(73, 14, 73);
+    height: 100px;
+} */
+.gallery__item {
+    display: flex;
+    
+    width: 300px;
+    height: 300px;
+    background-color: tomato;
+    /* background: url(./img/mothman-frank-frazetta.jpg) center/cover no-repeat; */
+    padding: 5px;
+}
+.item__right {
+    background-color: rgba(0, 128, 128, 0.381);
+    height: 100%;
+    width: 50%;
+}
+.item__left {
+    background-color:rgba(126, 83, 126, 0.401);
+    height: 100%;
+    width: 50%;
+}
+
+.gallery__counter {
+    width: 300px;
+    height: 40px;
+    /* background-color: rgb(145, 226, 218); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gallery__style{
+    font-family: Arial, Helvetica, sans-serif;
+    /* font-weight: bold; */
+    font-size: 17px;
+    color: white;
+}
+.gallery__dots{
+    height: 5px;
+    width: 5px;
+    border-radius: 50%;
+    background-color: grey;
+    margin: 5px;
+}
+
+
+/* ---------------------------------------------- */
+
+/* --------------------------------------- Gallery Touch ----------------------- */
+
+.glrT {
+    width: 100%;
+    background: rgba(100, 148, 237, 0.632);
+    display: flex;
+    justify-content: center;
+}
+.glrT__body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    background:white;
+    border-radius: 10px
+}
+.glrT__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    padding: 10px;
+}
+.glrT__desc {
+    min-height: 40px;
+    background-color: rgb(228, 228, 228);
+    border-radius: 0px 0px 5px 5px;
+    padding:0 0 3px 5px;
+    box-sizing: border-box;
+}
+.glrT__imageContent {
+    /* width: 300px;
+    height: 300px; */
+    background-color: sandybrown;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+}
+.glrT__imageItem{
+    position: absolute;
+}
+
+
+.glrT__counter {
+    /* height: 10px; */
+    background-color: rgb(228, 228, 228);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+}
+
+.glrT__counterContent{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    color: rgb(74, 74, 74);
+    
+}
+
+/* ------------------------------------------------------------------- */
+.test_box{
+    width: 300px;
+    height: 400px;
+    background-color: burlywood;
+    border-radius: 10px;
+}
+
