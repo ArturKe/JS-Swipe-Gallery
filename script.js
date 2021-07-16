@@ -18,9 +18,6 @@ const glrImg =[
   
   
   function glrAction (e){
-    // console.log(e.target)
-    // console.log(e.target.classList.value)
-    // console.log(e)
     if (e.target.classList.contains('item__right')){
       glrForward()
     } else if (e.target.classList.contains('item__left')){
@@ -147,42 +144,17 @@ class TouchGallery {
     this.glrTBackward()
     this.glrTCheckUpdate()
     this.glrTDescUpdate()
-
-
-
-
-    // for(let i=0; i<3; i++){
-    //   if(i === 0){ document.querySelector(`${this.target} .glrT__imageContent`).innerHTML+=`<div style="background:url('${this.iArray[this.lenghtArr-1].link}') center/cover no-repeat; width:${this.width}px; height:${this.height}px; transform:translateX(${offsetX}px)" class="glrT__imageItem">Image</div>`
-    //   offsetX += this.width 
-    // } else {
-    //     document.querySelector(`${this.target} .glrT__imageContent`).innerHTML+=`<div style="background:url('${this.iArray[i-1].link}') center/cover no-repeat; width:${this.width}px; height:${this.height}px; transform:translateX(${offsetX}px)" class="glrT__imageItem">Image</div>`
-    //     offsetX += this.width
-    //   }
-      
-    // }  -смещает на одну позицию
-
-
-    // this.iArray.forEach(item=>{
-    //   document.querySelector(`${this.target} .glrT__imageContent`).innerHTML+=`<div style="background:url('${item.link}') center/cover no-repeat; width:${this.width}px; height:${this.height}px; transform:translateX(${offsetX}px)" class="glrT__imageItem">Image</div>`
-    //   offsetX += this.width
-    // })
   } //Создает 3 блока в шаблоне и выводит в них первые 3 изображения из массива 
 
   eventBind(){
     this.imgContent = document.querySelector(`${this.target} .glrT__imageContent`) 
     this.imgContent.addEventListener("touchmove",(e)=>{
-      // console.log('Mooooove')
       e.preventDefault()
       e.stopPropagation()
      
       
       this.curentPosX = Math.floor(e.touches[0].clientX)
      
-     
-      // console.log(this.startX)
-      // console.log(e.touches.length) //------------------------------------
-      // console.log(e)
-      //---------------------------------------------------------------------
       if(e.touches.length >= 2){
         this.curentPosXtouch2 = Math.floor(e.touches[1].clientX)
         this.scalePicture(this.curentPosX,this.curentPosXtouch2)
@@ -240,8 +212,6 @@ class TouchGallery {
   } // Добавляет слушатели на разные элементы
 
   scalePicture(x1,x2){
-    // document.querySelectorAll(`${this.target} .glrT__imageItem`)[1].style.background="red"
-    let scale = remap((x2-x1),30,250,1,3)
     document.querySelectorAll(`${this.target} .glrT__imageItem`)[1].style.transform=`scale(${(x2-x1)/100})`
     
 
@@ -252,10 +222,6 @@ class TouchGallery {
 
   }
 
-  remap (value, r0, r1, r2, r3) {
-    var mag = Math.abs(value - r0), sgn = value < 0 ? -1 : 1;
-    return sgn * mag * (r3 - r2) / (r1 - r0);
-  }
 
   moveAllBoxes(positionX,startTouch){
     const allImg = document.querySelectorAll(`${this.target} .glrT__imageItem`)
@@ -394,7 +360,6 @@ class TouchGallery {
   }  //Проверяет длинну массива изображений в зависимости от нее вызывает апдейт Счетчика или Дотера
   
   glrTDotsUpdate() {
-      // console.log('DotsUpdate')
       const allDots = document.querySelectorAll(`${this.target} .gallery__dots`)
       allDots.forEach((dot)=>{
         dot.style.background = "grey"
