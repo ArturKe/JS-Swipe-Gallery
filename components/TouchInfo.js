@@ -20,12 +20,16 @@ class TouchInfo {
     }
   
     init(){
-      document.querySelector(this.targetClass).insertAdjacentHTML('beforeend',`<div class="info_block" ${this.infoBlockStyle}></div>`)
+      document.querySelector(this.targetClass).insertAdjacentHTML('beforeend',`
+      <div class="info_wraper" style="display:flex; justify-content:center; align-items:center">
+        <div class="info_block" ${this.infoBlockStyle}></div>
+      </div>`)
       this.binding()
   
     }
     binding(){
-      const testBox = document.querySelector(`${this.targetClass} .info_block`)
+      const testBox = document.querySelector(`${this.targetClass} .info_wraper .info_block`)
+      console.log(testBox)
       testBox.addEventListener('touchmove',(e)=>{this.updateTouchState(e,testBox)})
   
       testBox.addEventListener('touchstart',(e)=>{
