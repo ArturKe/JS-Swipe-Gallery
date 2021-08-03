@@ -168,7 +168,7 @@ class TouchGallery {
   
     }
   
-    allBoxesStyle(state){
+    allBoxesStyle(state){  //добавляет и убирает свойство транзишн
       if(state){
         document.querySelectorAll(`${this.target} .glrT__imageItem`).forEach(item=>{
           item.style.transition ="all 0.3s"
@@ -178,11 +178,11 @@ class TouchGallery {
           item.style.transition =""
         })
       }
-    } //добавляет и убирает свойство транзишн
+    } 
     
     
   
-    removeBox(first){
+    removeBox(first){  //Удаляет первый или последний элемент
       // const lChild = document.querySelector(target).lastChild
       let lChild 
       if(first){
@@ -190,10 +190,10 @@ class TouchGallery {
       } else {
         lChild= document.querySelectorAll(`${this.target} .glrT__imageItem`)[2]
       }
-      console.log(lChild)
+      // console.log(lChild)
       // lChild.style.background="green"
       document.querySelector(`${this.target} .glrT__imageContent`).removeChild(lChild)
-    } //Удаляет первый или последний элемент
+    } 
   
     addBox(first){
       if(first){
