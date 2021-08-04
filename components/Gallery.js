@@ -10,6 +10,8 @@ class TouchGallery {
     this.curentStep = 0;
     this.touchStart = false;
     this.multiTouch = false;
+    this.block = false;
+    this.rem = this.createRemap(50,300,0,2);
 
     this.init();
     this.renderImg();
@@ -50,16 +52,33 @@ class TouchGallery {
   
   eventBind(){ // Добавляет слушатели на разные элементы
     this.imgContent = document.querySelector(`${this.target} .glrT__imageContent`) 
+
     this.imgContent.addEventListener("touchmove",(e)=>{
       e.preventDefault()
       e.stopPropagation()
-      
-      
-      this.curentPosX = Math.floor(e.touches[0].clientX)
-      
+      let startDistance
+
       if(e.touches.length >= 2){
-        this.curentPosXtouch2 = Math.floor(e.touches[1].clientX)
-        this.scalePicture(this.curentPosX,this.curentPosXtouch2)
+        this.multiTouch = true
+        if(!this.block){
+          startDistance = this.rem(this.calcVecorDistance(e))
+          this.block = true
+
+        }
+      } else {
+        this.multiTouch = false
+        this.block = false
+      }
+
+        
+      this.curentPosX = Math.floor(e.touches[0].clientX)
+      this.curentPosY = Math.floor(e.touches[0].clientY)
+      //let startDistance = this.rem(this.calcVecorDistance(e))
+      
+      if(this.multiTouch){
+        // this.curentPosXtouch2 = Math.floor(e.touches[1].clientX)
+        // this.curentPosYtouch2 = Math.floor(e.touches[1].clientY)
+        this.scalePicture(e,startDistance)
       } else {
         this.moveAllBoxes(this.curentPosX,this.startX)
       }
@@ -106,8 +125,25 @@ class TouchGallery {
     })
   } 
   
-  scalePicture(x1,x2){
-    document.querySelectorAll(`${this.target} .glrT__imageItem`)[1].style.transform=`scale(${(x2-x1)/100})`  
+  scalePicture(e,startVectorDistance){ 
+    let distance = Math.abs(this.rem(this.calcVecorDistance(e)) - startVectorDistance)
+    if (distance < 1){
+      distance = 1
+    }
+    let scale = distance
+    document.querySelectorAll(`${this.target} .glrT__imageItem`)[1].style.transform=`scale(${scale})`  
+  }
+
+  createRemap(inMin, inMax, outMin, outMax) {
+    return function remaper(x) {
+        return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+    };
+  }
+  calcVecorDistance(e){
+    let a = e.touches[0].clientX - e.touches[1].clientX
+    let b = e.touches[0].clientY - e.touches[1].clientY
+    let vectorDistance = Math.sqrt(a*a+b*b)
+    return vectorDistance
   }
 
   scalePictureReset(){

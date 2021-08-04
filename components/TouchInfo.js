@@ -29,7 +29,7 @@ class TouchInfo {
     }
     binding(){
       const testBox = document.querySelector(`${this.targetClass} .info_wraper .info_block`)
-      console.log(testBox)
+      // console.log(testBox)
       testBox.addEventListener('touchmove',(e)=>{this.updateTouchState(e,testBox)})
   
       testBox.addEventListener('touchstart',(e)=>{
@@ -66,7 +66,7 @@ class TouchInfo {
       }
       
       if(this.isMultitouched){
-        this.remapedDistance = (rem(vectorDistance))
+        this.remapedDistance = (this.rem(this.vectorDistance))
       } else {
         this.remapedDistance = 0
       }
