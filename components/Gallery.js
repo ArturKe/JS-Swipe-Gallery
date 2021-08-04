@@ -7,12 +7,16 @@ class TouchGallery {
     this.target = target;
     this.startX = 0;
     this.startY = 0;
+    
     this.endX = 0;
     this.curentStep = 0;
     this.touchStart = false;
     this.multiTouch = false;
+    this.multiStartX = 0;
+    this.multiStartY = 0;
     this.block = false;
     this.rem = this.createRemap(50,300,1,3);
+    this.startDistance = 0;
 
     this.init();
     this.renderImg();
@@ -57,28 +61,37 @@ class TouchGallery {
     this.imgContent.addEventListener("touchmove",(e)=>{
       e.preventDefault()
       e.stopPropagation()
-      let startDistance
-
+      
       if(e.touches.length >= 2){
         this.multiTouch = true
+        // console.log('MultiTouch Activate')
         if(!this.block){
-          startDistance = this.rem(this.calcVecorDistance(e))
+          
+          this.startDistance = this.rem(this.calcVecorDistance(e))
+          this.multiStartX = (e.touches[0].clientX + e.touches[1].clientX)/2
+          this.multiStartY = (e.touches[0].clientY + e.touches[1].clientY)/2
+          console.log('MultiTouch Variable Activate')
+          console.log(this.startDistance)
+          console.log(this.multiStartX)
+          console.log(this.multiStartY)
+          console.log('-----------------------------')
+         
           this.block = true
         }
       } else {
         this.multiTouch = false
         this.block = false
+        // console.log('MultiTouch DeActivate: this.multiTouch' + this.multiTouch)
       }
 
         
       this.curentPosX = Math.floor(e.touches[0].clientX)
       this.curentPosY = Math.floor(e.touches[0].clientY)
-      //let startDistance = this.rem(this.calcVecorDistance(e))
       
-      if(this.multiTouch){
-        // this.curentPosXtouch2 = Math.floor(e.touches[1].clientX)
-        // this.curentPosYtouch2 = Math.floor(e.touches[1].clientY)
-        this.scalePicture(e,startDistance)
+      
+      if(e.touches.length >= 2){
+        this.scalePicture(e,this.startDistance)
+        
       } else {
         this.moveAllBoxes(this.curentPosX,this.startX)
       }
@@ -91,8 +104,12 @@ class TouchGallery {
       document.body.style.overflow = "hidden"
       this.allBoxesStyle(false)
       this.touchStart = true
+
       if(e.touches.length >= 2){
         this.multiTouch = true
+        
+      } else {
+        this.multiTouch = false
       }
 
     })
@@ -126,23 +143,25 @@ class TouchGallery {
     })
   } 
   
-  scalePicture(e,startVectorDistance){ 
-    // let distance = Math.abs(this.rem(this.calcVecorDistance(e)) - startVectorDistance)
-    // if (distance < 1){
-    //   distance = 1
-    // }
-    //let moveX = (e.touches[0].clientX + e.touches[1].clientX)/2 + this.startX
-    //let item1 = document.querySelectorAll(`${this.target} .glrT__imageItem`)[1]
-    let moveX = (e.touches[0].clientX + e.touches[1].clientX)/2
-    let moveY = (e.touches[0].clientY + e.touches[1].clientY)/2
-    let scale = this.rem(this.calcVecorDistance(e))
+  scalePicture(e,startDistance){
+
+    console.log('Scale------------------------------ MultiTouch Function Activate')
+    
+    let moveX = (e.touches[0].clientX + e.touches[1].clientX)/2 - this.multiStartX
+    let moveY = (e.touches[0].clientY + e.touches[1].clientY)/2 - this.multiStartY
+    console.log('moveX:' + moveX )
+    console.log('moveX:' + moveY )
+    console.log('multiStartX:' + this.multiStartX )
+    console.log('multiStartY:' + this.multiStartY )
+
+    let scale = 1 + this.rem(this.calcVecorDistance(e)) - startDistance
+
     if (scale < 1){
         scale = 1
       }
-    // document.querySelectorAll(`${this.target} .glrT__imageItem`)[1].style.transform = `translate(${moveX}px, ${moveY}px)`
-    document.querySelectorAll(`${this.target} .glrT__imageItem`)[1].style.transform = `scale(${scale}) translate(${moveX}px, ${moveY}px)`  
     
-    
+    document.querySelectorAll(`${this.target} .glrT__imageItem`)[1].style.transform = `scale(${scale}) translate(${moveX}px, ${moveY}px)` 
+
   }
 
   createRemap(inMin, inMax, outMin, outMax) {
