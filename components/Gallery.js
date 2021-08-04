@@ -6,12 +6,13 @@ class TouchGallery {
     this.height = height;
     this.target = target;
     this.startX = 0;
+    this.startY = 0;
     this.endX = 0;
     this.curentStep = 0;
     this.touchStart = false;
     this.multiTouch = false;
     this.block = false;
-    this.rem = this.createRemap(50,300,0,2);
+    this.rem = this.createRemap(50,300,1,3);
 
     this.init();
     this.renderImg();
@@ -63,7 +64,6 @@ class TouchGallery {
         if(!this.block){
           startDistance = this.rem(this.calcVecorDistance(e))
           this.block = true
-
         }
       } else {
         this.multiTouch = false
@@ -87,6 +87,7 @@ class TouchGallery {
   
     this.imgContent.addEventListener("touchstart",(e)=>{
       this.startX = Math.floor(e.touches[0].clientX)
+      this.startY = Math.floor(e.touches[0].clientY)
       document.body.style.overflow = "hidden"
       this.allBoxesStyle(false)
       this.touchStart = true
@@ -126,12 +127,22 @@ class TouchGallery {
   } 
   
   scalePicture(e,startVectorDistance){ 
-    let distance = Math.abs(this.rem(this.calcVecorDistance(e)) - startVectorDistance)
-    if (distance < 1){
-      distance = 1
-    }
-    let scale = distance
-    document.querySelectorAll(`${this.target} .glrT__imageItem`)[1].style.transform=`scale(${scale})`  
+    // let distance = Math.abs(this.rem(this.calcVecorDistance(e)) - startVectorDistance)
+    // if (distance < 1){
+    //   distance = 1
+    // }
+    //let moveX = (e.touches[0].clientX + e.touches[1].clientX)/2 + this.startX
+    //let item1 = document.querySelectorAll(`${this.target} .glrT__imageItem`)[1]
+    let moveX = (e.touches[0].clientX + e.touches[1].clientX)/2
+    let moveY = (e.touches[0].clientY + e.touches[1].clientY)/2
+    let scale = this.rem(this.calcVecorDistance(e))
+    if (scale < 1){
+        scale = 1
+      }
+    // document.querySelectorAll(`${this.target} .glrT__imageItem`)[1].style.transform = `translate(${moveX}px, ${moveY}px)`
+    document.querySelectorAll(`${this.target} .glrT__imageItem`)[1].style.transform = `scale(${scale}) translate(${moveX}px, ${moveY}px)`  
+    
+    
   }
 
   createRemap(inMin, inMax, outMin, outMax) {
@@ -139,6 +150,7 @@ class TouchGallery {
         return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
     };
   }
+
   calcVecorDistance(e){
     let a = e.touches[0].clientX - e.touches[1].clientX
     let b = e.touches[0].clientY - e.touches[1].clientY
